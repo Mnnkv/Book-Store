@@ -1,8 +1,7 @@
-import time
-
 import pytest
 
 from .pages.product_page import ProductPage
+from .pages.basket_page import BasketPage
 
 product_base_link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207"
 links = [f"{product_base_link}/?promo=offer{no}" if no != 7
@@ -61,3 +60,22 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     page = ProductPage(browser, link)
     page.open()
     page.go_to_login_page()
+
+@pytest.mark.empty
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+    page = BasketPage(browser, link)
+    page.open()
+    page.go_to_cart()
+    page.should_be_empty_basket()
+    page.should_be_empty_message()
+
+@pytest.mark.empty
+@pytest.mark.xfail(reason = "Negative test")
+def test_basket_is_not_empty_opened_from_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+    page = BasketPage(browser, link)
+    page.open()
+    page.go_to_cart()
+    page.no_empty_message()
+    page.should_be_checkout_button()
