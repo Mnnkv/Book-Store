@@ -24,21 +24,21 @@ class TestLoginFromMainPage():
 
 
 @pytest.mark.basket
-def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
-    link = "http://selenium1py.pythonanywhere.com/"
-    page = BasketPage(browser, link)
-    page.open()
-    page.go_to_cart()
-    page.should_be_empty_basket()
-    page.should_be_empty_message()
+class TestBasketFromMainPage():
 
+    def test_guest_cant_see_product_in_basket_opened_from_main_page(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/"
+        page = BasketPage(browser, link)
+        page.open()
+        page.go_to_cart()
+        page.should_be_empty_basket()
+        page.should_be_empty_message()
 
-@pytest.mark.basket
-@pytest.mark.xfail(reason="Negative test")
-def test_basket_is_not_empty_opened_from_main_page(browser):
-    link = "http://selenium1py.pythonanywhere.com/"
-    page = BasketPage(browser, link)
-    page.open()
-    page.go_to_cart()
-    page.no_empty_message()
-    page.should_be_checkout_button()
+    @pytest.mark.xfail(reason="Negative test")
+    def test_basket_is_not_empty_opened_from_main_page(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/"
+        page = BasketPage(browser, link)
+        page.open()
+        page.go_to_cart()
+        page.no_empty_message()
+        page.should_be_checkout_button()
